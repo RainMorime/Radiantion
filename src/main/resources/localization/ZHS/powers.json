@@ -1,0 +1,9 @@
+{
+    "RadiationMod:Radiation": {
+      "NAME": "辐射",
+      "DESCRIPTIONS": [
+        "在你的回合开始时，失去 #b",
+        " 点最大生命值。 NL 回合结束时，层数减半（向下取整）。"
+      ]
+    }
+  }

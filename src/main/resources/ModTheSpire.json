@@ -1,0 +1,10 @@
+{
+  "modid": "RadiantionMod",
+  "name": "辐射工兵mod",
+  "author_list": ["RainMorime"],
+  "description": "辐射工兵角色mod。",
+  "version": "0.0.1",
+  "sts_version": "12-22-2020",
+  "mts_version": "3.30.3",
+  "dependencies": ["basemod"]
+}
