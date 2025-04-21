@@ -3,18 +3,22 @@ package radiationmod.cards;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import radiationmod.powers.RadiationPower;
+import radiationmod.modcore.CardColorEnum;
 
 public class PolluteLand extends CustomCard {
     public static final String ID = "RadiationMod:PolluteLand";
-    private static final String NAME = "污染大地"; // 需要本地化
+    private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
+    private static final String NAME = cardStrings.NAME;
+    private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // Use Strike image
     private static final int COST = 2;
-    private static final String DESCRIPTION = "对所有敌人施加 !M! 层 radiationmod:radiation 。 NL 消耗 。"; // 使用关键词 ID
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardColor COLOR = CardColor.COLORLESS; // 示例颜色
+    private static final CardColor COLOR = CardColorEnum.RADIATION_GREEN;
     private static final CardRarity RARITY = CardRarity.RARE; // 示例稀有度
     private static final CardTarget TARGET = CardTarget.ALL_ENEMY; // 目标为所有敌人
 

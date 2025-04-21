@@ -11,51 +11,61 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import radiationmod.powers.RadiationPower;
+import radiationmod.powers.SelfRadiationPower;
 import radiationmod.modcore.CardColorEnum;
 
-public class RadiationSpray extends CustomCard {
-    public static final String ID = "RadiationMod:RadiationSpray";
+/**
+ * 过载喷射 - 攻击牌，造成高伤害同时施加辐射，但自身也受辐射影响
+ */
+public class OverchargedSpray extends CustomCard {
+    public static final String ID = "RadiationMod:OverchargedSpray";
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String NAME = cardStrings.NAME;
     private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // Use Strike image
+    private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // 临时使用Strike图片
     private static final int COST = 1;
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = CardColorEnum.RADIATION_GREEN;
-    private static final CardRarity RARITY = CardRarity.COMMON; // 示例稀有度
+    private static final CardRarity RARITY = CardRarity.UNCOMMON;
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
-    private static final int DAMAGE_AMOUNT = 6;
-    private static final int UPGRADE_PLUS_DMG = 3;
-    private static final int RADIATION_AMOUNT = 3;
-    private static final int UPGRADE_PLUS_RADIATION = 1;
+    private static final int DAMAGE = 10;
+    private static final int UPGRADE_PLUS_DMG = 4;
+    private static final int RADIATION_AMOUNT = 5;
+    private static final int SELF_RADIATION_AMOUNT = 2;
 
-    public RadiationSpray() {
+    public OverchargedSpray() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
-        this.baseDamage = DAMAGE_AMOUNT;
-        this.baseMagicNumber = this.magicNumber = RADIATION_AMOUNT; // 用 magicNumber 存储辐射层数
+        this.baseDamage = DAMAGE;
+        this.baseMagicNumber = this.magicNumber = RADIATION_AMOUNT;
         this.initializeDescription();
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        // 伤害动作
+        // 造成伤害
         AbstractDungeon.actionManager.addToBottom(
-                new DamageAction(m, new DamageInfo(p, this.damage, damageTypeForTurn), AbstractGameAction.AttackEffect.POISON) // 换个特效
+            new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), 
+                AbstractGameAction.AttackEffect.SLASH_HEAVY)
         );
-        // 施加辐射动作
+        
+        // 施加辐射
         AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new RadiationPower(m, this.magicNumber), this.magicNumber)
+            new ApplyPowerAction(m, p, new RadiationPower(m, this.magicNumber), this.magicNumber)
+        );
+        
+        // 施加自我辐射
+        AbstractDungeon.actionManager.addToBottom(
+            new ApplyPowerAction(p, p, new SelfRadiationPower(p, SELF_RADIATION_AMOUNT), SELF_RADIATION_AMOUNT)
         );
     }
-
+    
     @Override
     public void upgrade() {
-        if (!upgraded) {
-            upgradeName();
-            upgradeDamage(UPGRADE_PLUS_DMG);
-            upgradeMagicNumber(UPGRADE_PLUS_RADIATION); // 升级辐射层数
-            initializeDescription();
+        if (!this.upgraded) {
+            this.upgradeName();
+            this.upgradeDamage(UPGRADE_PLUS_DMG);
+            this.initializeDescription();
         }
     }
 } 

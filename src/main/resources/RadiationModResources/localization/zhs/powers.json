@@ -1,0 +1,38 @@
+{
+  "RadiationMod:Radiation": {
+    "NAME": "辐射",
+    "DESCRIPTIONS": [
+      "回合开始时，失去 #b",
+      " 点最大生命值 NL 回合结束时，层数向下减半"
+    ]
+  },
+  "RadiationMod:RadiationDecayPrevention": {
+    "NAME": "辐射衰减阻止",
+    "DESCRIPTIONS": [
+      "本回合 辐射 不会衰减"
+    ]
+  },
+  "RadiationMod:LingeringRadiationPower": {
+    "NAME": "持久辐射",
+    "DESCRIPTIONS": [
+      "你施加的 辐射 不再衰减"
+    ]
+  },
+  "RadiationMod:SelfRadiation": {
+    "NAME": "自我辐射",
+    "DESCRIPTIONS": [
+      "回合开始时，受到 #b",
+      " 点伤害。",
+      " NL 力量和敏捷-1。",
+      " NL 每回合少1点能量。"
+    ]
+  },
+  "RadiationMod:IrradiatedCore": {
+    "NAME": "辐能核心",
+    "DESCRIPTIONS": [
+      "每当你受到自我辐射伤害时，获得 #b1 点力量。",
+      "每当你受到自我辐射伤害时，获得 #b",
+      " 点力量。"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "辐射": {
+    "PROPER_NAME": "辐射",
+    "NAMES": [
+      "辐射",
+      "radiation",
+      "radiationmod:radiation"
+    ],
+    "DESCRIPTION": "目标回合开始时，失去 #b 层数 点最大生命值 NL 回合结束时，层数向下减半"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "RadiationMod:Strike_Rad": {
+    "NAME": "打击",
+    "DESCRIPTION": "造成 !D! 点伤害。"
+  },
+  "RadiationMod:Defend_Rad": {
+    "NAME": "防御",
+    "DESCRIPTION": "获得 !B! 点格挡。"
+  },
+  "RadiationMod:Strike": {
+    "NAME": "辐射打击",
+    "DESCRIPTION": "造成 !D! 点伤害。施加 1 层 辐射 。",
+    "UPGRADE_DESCRIPTION": "造成 !D! 点伤害。施加 1 层 辐射 。"
+  },
+  "RadiationMod:RadiationSpray": {
+    "NAME": "辐射喷射",
+    "DESCRIPTION": "造成 !D! 点伤害。施加 !M! 层 辐射 。",
+    "UPGRADE_DESCRIPTION": "造成 !D! 点伤害。施加 !M! 层 辐射 。"
+  },
+  "RadiationMod:ToxicSludge": {
+    "NAME": "毒性淤泥",
+    "DESCRIPTION": "选择一名敌人。施加 !M! 层 辐射 。本回合其 辐射 不会衰减。",
+    "UPGRADE_DESCRIPTION": "选择一名敌人。施加 !M! 层 辐射 。本回合其 辐射 不会衰减。"
+  },
+  "RadiationMod:PolluteLand": {
+    "NAME": "污染大地",
+    "DESCRIPTION": "对所有敌人施加 !M! 层 辐射 。 NL 消耗 。",
+    "UPGRADE_DESCRIPTION": "对所有敌人施加 !M! 层 辐射 。 NL 消耗 。"
+  },
+  "RadiationMod:LingeringRadiation": {
+    "NAME": "持久辐射",
+    "DESCRIPTION": "你施加的 辐射 不再衰减。",
+    "UPGRADE_DESCRIPTION": "你施加的 辐射 不再衰减。"
+  },
+  "RadiationMod:RadiationDetonation": {
+    "NAME": "辐射引爆",
+    "DESCRIPTION": "对一名敌人造成其 辐射 层数x !M! 的伤害。移除其所有 辐射 。",
+    "UPGRADE_DESCRIPTION": "对一名敌人造成其 辐射 层数x !M! 的伤害。移除其所有 辐射 。"
+  },
+  "RadiationMod:RadiationShielding": {
+    "NAME": "辐射护盾",
+    "DESCRIPTION": "获得 !B! 点格挡。 NL 每有一个带有 辐射 的敌人，额外获得 !M! 点格挡。",
+    "UPGRADE_DESCRIPTION": "获得 !B! 点格挡。 NL 每有一个带有 辐射 的敌人，额外获得 !M! 点格挡。"
+  },
+  "RadiationMod:OverchargedSpray": {
+    "NAME": "过载喷射",
+    "DESCRIPTION": "造成 !D! 点伤害。施加 !M! 层 辐射 。你获得 2 层自我辐射。",
+    "UPGRADE_DESCRIPTION": "造成 !D! 点伤害。施加 !M! 层 辐射 。你获得 2 层自我辐射。"
+  },
+  "RadiationMod:EmergencyVent": {
+    "NAME": "紧急排放",
+    "DESCRIPTION": "失去 !M! 点生命值。获得 [E] [E] 。消耗。",
+    "UPGRADE_DESCRIPTION": "失去 !M! 点生命值。获得 [E] [E] 。消耗。"
+  },
+  "RadiationMod:IrradiatedCore": {
+    "NAME": "辐能核心",
+    "DESCRIPTION": "每当你受到自我辐射伤害时，获得 !M! 点力量。",
+    "UPGRADE_DESCRIPTION": "每当你受到自我辐射伤害时，获得 !M! 点力量。"
+  },
+  "RadiationMod:PurgeProtocol": {
+    "NAME": "净化协议",
+    "DESCRIPTION": "移除你所有的自我辐射层数。每移除一层，获得 !M! 点格挡。消耗。",
+    "UPGRADE_DESCRIPTION": "移除你所有的自我辐射层数。每移除一层，获得 !M! 点格挡。消耗。"
+  },
+  "RadiationMod:DesperateBlast": {
+    "NAME": "孤注一掷",
+    "DESCRIPTION": "对所有敌人造成 !D! 点伤害。施加 !M! 层 辐射 。使你的自我辐射层数翻倍。",
+    "UPGRADE_DESCRIPTION": "对所有敌人造成 !D! 点伤害。施加 !M! 层 辐射 。使你的自我辐射层数翻倍。"
+  }
+}

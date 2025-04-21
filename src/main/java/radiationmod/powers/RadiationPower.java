@@ -13,10 +13,9 @@ public class RadiationPower extends AbstractPower {
     public static final String POWER_ID = "RadiationMod:Radiation";
     private static final PowerStrings powerStrings = CardCrawlGame.languagePack.getPowerStrings(POWER_ID);
     public static final String NAME = powerStrings.NAME;
-    public static final String[] DESCRIPTIONS = {
-            "在你的回合开始时，失去 #b",
-            " 点最大生命值。 NL 回合结束时，层数减半（向下取整）。"
-    };
+    public static final String[] DESCRIPTIONS = powerStrings.DESCRIPTIONS;
+    
+    private boolean noDecayThisTurn = false; // 本回合不衰减的标记
 
     public RadiationPower(AbstractCreature owner, int amount) {
         this.name = NAME;
@@ -30,21 +29,30 @@ public class RadiationPower extends AbstractPower {
         
         this.updateDescription();
     }
+    
+    // 设置是否本回合不衰减
+    public void setNoDecayThisTurn(boolean value) {
+        this.noDecayThisTurn = value;
+    }
 
     @Override
     public void updateDescription() {
         this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+        
+        // 如果有不衰减标记，在描述中显示
+        if (this.noDecayThisTurn) {
+            if (DESCRIPTIONS.length > 2) {
+                this.description += DESCRIPTIONS[2];
+            } else {
+                this.description += " NL 本回合不会衰减。";
+            }
+        }
     }
 
     @Override
     public void atStartOfTurn() {
         if (!this.owner.isPlayer) {
             if (this.owner != null && !this.owner.isDying && this.amount > 0) {
-                if (this.owner.hasPower(RadiationDecayPreventionPower.POWER_ID)) {
-                    this.flashWithoutSound();
-                    return;
-                }
-
                 this.flash();
                 AbstractDungeon.actionManager.addToBottom(
                         new DecreaseMaxHPAction(this.owner, this.owner, this.amount)
@@ -57,6 +65,21 @@ public class RadiationPower extends AbstractPower {
     public void atEndOfTurn(boolean isPlayer) {
         if (!isPlayer) {
             if (this.owner != null && !this.owner.isDying && this.amount > 0) {
+                // 检查是否有不衰减标记
+                if (this.noDecayThisTurn) {
+                    this.flash();
+                    this.noDecayThisTurn = false; // 清除标记，下回合正常衰减
+                    this.updateDescription(); // 更新描述
+                    return;
+                }
+                
+                // 检查玩家是否有持久辐射能力
+                if (AbstractDungeon.player.hasPower(LingeringRadiationPower.POWER_ID)) {
+                    this.flash();
+                    return;
+                }
+                
+                // 执行正常衰减
                 int amountToReduce = this.amount / 2;
 
                 if (amountToReduce > 0) {

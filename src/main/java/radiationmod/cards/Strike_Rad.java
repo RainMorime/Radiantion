@@ -2,7 +2,6 @@ package radiationmod.cards;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
@@ -10,16 +9,15 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import radiationmod.powers.RadiationPower;
 import radiationmod.modcore.CardColorEnum;
 
-public class Strike extends CustomCard {
-    public static final String ID = "RadiationMod:Strike";
+public class Strike_Rad extends CustomCard {
+    public static final String ID = "RadiationMod:Strike_Rad";
     private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
     private static final String NAME = cardStrings.NAME;
     private static final String DESCRIPTION = cardStrings.DESCRIPTION;
-    private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png";
-    private static final int COST = 0;
+    private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // 使用现有图像
+    private static final int COST = 1;
     private static final CardType TYPE = CardType.ATTACK;
     private static final CardColor COLOR = CardColorEnum.RADIATION_GREEN;
     private static final CardRarity RARITY = CardRarity.BASIC;
@@ -27,12 +25,12 @@ public class Strike extends CustomCard {
 
     private static final int DAMAGE_AMOUNT = 6;
     private static final int UPGRADE_PLUS_DAMAGE = 3;
-    private static final int RADIATION_AMOUNT = 1;
 
-    public Strike() {
+    public Strike_Rad() {
         super(ID, NAME, IMG_PATH, COST, DESCRIPTION, TYPE, COLOR, RARITY, TARGET);
         this.baseDamage = DAMAGE_AMOUNT;
-        this.initializeDescription();
+        this.tags.add(CardTags.STRIKE);
+        this.tags.add(CardTags.STARTER_STRIKE);
     }
 
     @Override
@@ -40,19 +38,14 @@ public class Strike extends CustomCard {
         if (!this.upgraded) {
             this.upgradeName();
             this.upgradeDamage(UPGRADE_PLUS_DAMAGE);
-            this.initializeDescription();
         }
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         AbstractDungeon.actionManager.addToBottom(
-                new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), 
+                new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn),
                 AbstractGameAction.AttackEffect.SLASH_DIAGONAL)
         );
-        
-        AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new RadiationPower(m, RADIATION_AMOUNT), RADIATION_AMOUNT)
-        );
     }
-}
+} 

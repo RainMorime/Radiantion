@@ -3,20 +3,22 @@ package radiationmod.cards;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import radiationmod.powers.RadiationPower;
-import radiationmod.powers.RadiationDecayPreventionPower;
+import radiationmod.modcore.CardColorEnum;
 
 public class ToxicSludge extends CustomCard {
     public static final String ID = "RadiationMod:ToxicSludge";
-    private static final String NAME = "毒性淤泥"; // 需要本地化
+    private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
+    private static final String NAME = cardStrings.NAME;
+    private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // Use Strike image
     private static final int COST = 1;
-    // 更新描述以反映新效果，并使用关键词 ID
-    private static final String DESCRIPTION = "选择一名敌人。施加 !M! 层 radiationmod:radiation 。本回合其 radiationmod:radiation 不会衰减。"; // 需要本地化
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardColor COLOR = CardColor.COLORLESS; // 示例颜色
+    private static final CardColor COLOR = CardColorEnum.RADIATION_GREEN;
     private static final CardRarity RARITY = CardRarity.UNCOMMON; // 示例稀有度
     private static final CardTarget TARGET = CardTarget.ENEMY;
 
@@ -32,13 +34,13 @@ public class ToxicSludge extends CustomCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
+        // 创建带有"不衰减"标记的辐射Power
+        RadiationPower radiation = new RadiationPower(m, this.magicNumber);
+        radiation.setNoDecayThisTurn(true); // 设置不衰减标记
+        
         // 施加辐射
         AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new RadiationPower(m, this.magicNumber), this.magicNumber)
-        );
-        // 施加阻止衰减的临时 Power
-        AbstractDungeon.actionManager.addToBottom(
-                new ApplyPowerAction(m, p, new RadiationDecayPreventionPower(m, 1), 1) // amount 为 1 表示阻止 1 个回合
+                new ApplyPowerAction(m, p, radiation, this.magicNumber)
         );
     }
 

@@ -3,19 +3,23 @@ package radiationmod.cards;
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import radiationmod.powers.RadiationPower; // 需要导入 RadiationPower
+import radiationmod.modcore.CardColorEnum;
 
 public class RadiationShielding extends CustomCard {
     public static final String ID = "RadiationMod:RadiationShielding";
-    private static final String NAME = "辐射护盾"; // 需要本地化
+    private static final CardStrings cardStrings = CardCrawlGame.languagePack.getCardStrings(ID);
+    private static final String NAME = cardStrings.NAME;
+    private static final String DESCRIPTION = cardStrings.DESCRIPTION;
     private static final String IMG_PATH = "RadiationModResources/img/cards/Strike.png"; // 示例路径
     private static final int COST = 1;
     // 使用 MagicNumber 存储额外格挡值
-    private static final String DESCRIPTION = "获得 !B! 点格挡。 NL 每有一个带有 radiationmod:radiation 的敌人，额外获得 !M! 点格挡。"; // 使用关键词 ID
     private static final CardType TYPE = CardType.SKILL;
-    private static final CardColor COLOR = CardColor.COLORLESS; // 示例颜色
+    private static final CardColor COLOR = CardColorEnum.RADIATION_GREEN;
     private static final CardRarity RARITY = CardRarity.COMMON; // 示例稀有度
     private static final CardTarget TARGET = CardTarget.SELF;
 
@@ -50,7 +54,7 @@ public class RadiationShielding extends CustomCard {
         }
     }
 
-    // 当卡牌在手牌中或使用时，需要动态更新格挡值以正确显示
+    // 更新动态描述部分，使用本地化文本
     @Override
     public void applyPowers() {
         int currentExtraBlock = 0;
@@ -59,23 +63,24 @@ public class RadiationShielding extends CustomCard {
                 currentExtraBlock += this.magicNumber;
             }
         }
-        // 更新基础格挡值以包含临时的额外格挡，这样 !B! 才会显示正确的总数
+        
+        // 存储原始基础格挡值
+        int originalBaseBlock = this.baseBlock;
+        
+        // 更新基础格挡值以包含临时的额外格挡
         this.baseBlock = BASE_BLOCK + currentExtraBlock;
-        // 调用父类方法计算最终格挡（可能受其他效果影响）
-        super.applyPowers();
-        // 计算完后恢复基础格挡值，防止永久改变
-        this.baseBlock = BASE_BLOCK;
-        // 标记格挡值是否被修改，用于显示（如果基础值和计算值不同）
-        this.isBlockModified = (this.block != this.baseBlock);
-
-        // 更新描述可能有点复杂，因为 !B! 已经包含了额外格挡
-        // 可以选择不在描述中显示动态计算的总和，只显示基础值和额外值逻辑
-        // 或者像下面这样尝试更新描述（可能需要调整）
-        // this.rawDescription = DESCRIPTION + " NL (当前额外: " + currentExtraBlock + ")";
+        super.applyPowers(); // 调用父类计算最终格挡
+        
+        // 计算完后恢复基础格挡值
+        this.baseBlock = originalBaseBlock;
+        this.isBlockModified = (this.block != this.baseBlock); // 标记是否修改
+        
+        // 更新描述（可选，如果需要显示动态计算的总和）
+        // String desc = upgraded ? UPGRADE_DESCRIPTION : DESCRIPTION;
+        // this.rawDescription = desc + " NL (当前额外: " + currentExtraBlock + ")";
         // initializeDescription();
     }
 
-    // 鼠标悬停时也计算
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
         int currentExtraBlock = 0;
@@ -84,9 +89,15 @@ public class RadiationShielding extends CustomCard {
                  currentExtraBlock += this.magicNumber;
              }
          }
+         
+         // 存储原始基础格挡值
+        int originalBaseBlock = this.baseBlock;
+         
          this.baseBlock = BASE_BLOCK + currentExtraBlock;
-         super.calculateCardDamage(mo); // 父类方法名虽然叫 damage，但也会计算 block
-         this.baseBlock = BASE_BLOCK;
+         super.calculateCardDamage(mo); // 父类方法计算 block
+         
+         // 恢复基础格挡值
+         this.baseBlock = originalBaseBlock;
          this.isBlockModified = (this.block != this.baseBlock);
     }
 
